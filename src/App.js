@@ -1,12 +1,27 @@
-import logo from "./logo.svg";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
+
+import Home from "./pages/Home";
+import About from "./pages/About";
+import RootLayout from "./pages/RootLayout";
+
 import "./App.css";
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route index element={<Home />} />
+      <Route path="about-me" element={<About />} />
+    </Route>
+  )
+);
+
 function App() {
-  return (
-    <div className="bg-blue-500 text-white p-4">
-      This is a container with Tailwind CSS styles.
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
