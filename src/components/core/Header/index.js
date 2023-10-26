@@ -1,17 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import FadeIn from "react-fade-in/lib/FadeIn";
+
 import headerData from "../../../dummy/headerData";
 
 const renderHeader = () => {
   return headerData.map((el) => (
     <li key={el.title} className="p-6">
-      <Link
-        className="text-slate-100 hover:text-sky-400 font-bold text-xl underline "
-        to={el.to}
-      >
-        {el.title}
-      </Link>
+      <FadeIn transitionDuration={1000}>
+        <Link
+          className="text-slate-100 hover:text-green-400 font-extrabold text-3xl underline "
+          to={el.to}
+        >
+          {el.title}
+        </Link>
+      </FadeIn>
     </li>
   ));
 };
