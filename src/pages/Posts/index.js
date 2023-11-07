@@ -1,17 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import ContentList from "../../components/core/ContentList";
 import PulseLoader from "react-spinners/PulseLoader";
 import posts from "../../dummy/postsData";
 
+import { LanguagesContext } from "../../App";
+
+import { ENGLISH } from "../../common/commonConstant";
+
 import "./index.css";
 
 function Posts() {
+  const lang = useContext(LanguagesContext);
   const { id } = useParams();
   const [currentPost, setCurrentPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  console.log(lang);
 
   const handleNavigationToPostDetail = (id) => {
     navigate(`/post/${id}`);
@@ -21,7 +28,7 @@ function Posts() {
     if (id !== null) {
       setCurrentPost(posts.find((item) => item.id === parseInt(id)));
     }
-  }, [id]);
+  }, [id, lang]);
 
   useEffect(() => {
     setLoading(true);
@@ -36,7 +43,9 @@ function Posts() {
       style={{ minHeight: "100vh" }}
     >
       <div className="basis-4/12 p-4 flex flex-col">
-        <h3 className="text-slate-50 text-3xl mb-2 font-extrabold">Posts </h3>
+        <h3 className="text-slate-50 text-3xl mb-2 font-extrabold">
+          {lang.language === ENGLISH ? "Posts" : "Bài viết"}{" "}
+        </h3>
         <hr />
         {posts.map((post) => (
           <div
@@ -45,7 +54,7 @@ function Posts() {
             onClick={() => handleNavigationToPostDetail(post.id)}
           >
             <p className="text-slate-50 text-xl hover:text-green-400">
-              {post.title}
+              {lang.language === ENGLISH ? post.title : post.vnTitle}
             </p>
             <p className="text-slate-50 text-sm italic pl-4">
               {post.createdAt}
@@ -59,7 +68,9 @@ function Posts() {
             <></>
           ) : (
             <p className="text-5xl font-bold tracking-wide text-green-400">
-              {currentPost?.title}
+              {lang.language === ENGLISH
+                ? currentPost?.title
+                : currentPost?.vnTitle}
             </p>
           )}
         </div>

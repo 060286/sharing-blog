@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import FadeIn from "react-fade-in/lib/FadeIn";
 
 import headerData from "../../../dummy/headerData";
+import languagesData from "../../../dummy/languagesData";
+import { LanguagesContext } from "../../../App";
+
+function Header() {
+  const languages = useContext(LanguagesContext);
+
+  const handleClickLanguageBtn = (name) => {
+    languages.changeLanguages(name);
+  };
+
+  return (
+    <div className="container mx-auto flex justify-between flex-row-reverse h-20 p-2.5">
+      <div className="flex gap-2">
+        {languagesData.map((lang) => (
+          <p
+            key={lang.id}
+            onClick={() => handleClickLanguageBtn(lang.name)}
+            className="text-slate-50 underline hover:text-green-400 cursor-pointer"
+          >
+            {lang.name}
+          </p>
+        ))}
+      </div>
+      <div>
+        <ul className="flex">{renderHeader()}</ul>
+      </div>
+    </div>
+  );
+}
 
 const renderHeader = () => {
   return headerData.map((el) => (
@@ -19,16 +48,5 @@ const renderHeader = () => {
     </li>
   ));
 };
-
-function Header() {
-  return (
-    <div className="container mx-auto flex justify-between flex-row-reverse h-20 p-2.5">
-      <div>Icon</div>
-      <div>
-        <ul className="flex">{renderHeader()}</ul>
-      </div>
-    </div>
-  );
-}
 
 export default Header;

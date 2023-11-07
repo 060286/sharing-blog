@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import PulseLoader from "react-spinners/PulseLoader";
@@ -7,8 +7,11 @@ import FadeIn from "react-fade-in/lib/FadeIn";
 import posts from "../../dummy/postsData";
 
 import "./style.css";
+import { LanguagesContext } from "../../App";
+import { ENGLISH } from "../../common/commonConstant";
 
 function Home() {
+  const language = useContext(LanguagesContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +23,7 @@ function Home() {
     setTimeout(() => {
       setLoading(false);
     }, 1500);
-  }, []);
+  }, [language.language]);
 
   return (
     <div className="container mx-auto mt-10 h-screen w-full flex">
@@ -54,7 +57,11 @@ function Home() {
           </div>
           <div className="basis-8/12 bg-slate-600 p-4 text-3xl font-bold text-slate-800">
             <FadeIn transitionDuration={3500}>
-              <p>Welcome to my pages</p>
+              {language.language === ENGLISH ? (
+                <p>Hi guys</p>
+              ) : (
+                <p>Chào bạn!</p>
+              )}
             </FadeIn>
           </div>
         </>

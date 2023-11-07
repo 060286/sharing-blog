@@ -1,3 +1,5 @@
+import { createContext, useState } from "react";
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -8,9 +10,13 @@ import {
 import Home from "./pages/Home";
 import About from "./pages/About";
 import RootLayout from "./pages/RootLayout";
+import Posts from "./pages/Posts";
+
+import { ENGLISH } from "./common/commonConstant";
 
 import "./App.css";
-import Posts from "./pages/Posts";
+
+export const LanguagesContext = createContext(null);
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,7 +29,17 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return <RouterProvider router={router} />;
+  const [language, setLanguage] = useState(ENGLISH);
+
+  const changeLanguages = (name) => {
+    setLanguage(name);
+  };
+
+  return (
+    <LanguagesContext.Provider value={{ language, changeLanguages }}>
+      <RouterProvider router={router} />
+    </LanguagesContext.Provider>
+  );
 }
 
 export default App;

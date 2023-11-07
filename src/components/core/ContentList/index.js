@@ -1,5 +1,3 @@
-import React from "react";
-
 import ContentItem from "../ContentItem";
 import FadeIn from "react-fade-in/lib/FadeIn";
 
@@ -10,7 +8,13 @@ function ContentList({ post }) {
     <div className="content-list-block">
       {post.content.map((item) => (
         <FadeIn transitionDuration={1000}>
-          <ContentItem note={item.note} subject={item.subject} />
+          <ContentItem
+            key={item.id}
+            notes={item.notes}
+            vnNotes={item.vnNotes}
+            subject={item.subject}
+            vnSubject={item.vnSubject}
+          />
         </FadeIn>
       ))}
     </div>

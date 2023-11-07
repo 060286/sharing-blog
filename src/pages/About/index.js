@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from "react";
-
+import Typewriter from "typewriter-effect";
 import PulseLoader from "react-spinners/PulseLoader";
-
 import FadeIn from "react-fade-in/lib/FadeIn";
+import { Tooltip } from "react-tooltip";
 
 import netCoreImg from "../../assets/dot_net_image.png";
+import reactJsImg from "../../assets/react.js-img.png";
 import meme from "../../assets/meme.jpeg";
+import { AiOutlineMail } from "react-icons/ai";
 
 import "./style.css";
+import "react-tooltip/dist/react-tooltip.css";
+import Dialog from "../../components/core/Dialog";
 
 function About() {
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenDialog = () => {
+    setIsOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -33,27 +46,29 @@ function About() {
             <p className="text-slate-100 font-sans text-6xl font-bold ">
               Hi Everyone! I'm Tam
             </p>
-            <p className="text-slate-100 mt-5 text-xl font-medium">
-              I am currently employed at{" "}
-              <span className="text-cyan-400">
-                BOSCH Global Software Technologies
-              </span>
-              , which is based in
-              <span className="text-red-500"> Vietnam</span>, as a{" "}
-              <span className="text-cyan-400">.NET developer</span>
+            <p className=" mt-5 text-2xl font-bold text-cyan-400">
+              <Typewriter
+                options={{
+                  strings: ["Just a person with a passion for programming."],
+                  loop: true,
+                  autoStart: true,
+                  delay: 50,
+                }}
+              />
             </p>
-            <div className="w-full flex justify-center mt-4">
+
+            <div className="w-full flex gap-6 justify-center mt-4">
               <img
                 className="w-48 h-48 mt-2.5"
                 src={netCoreImg}
                 alt="dot_net_core_image"
               />
+              <img
+                src={reactJsImg}
+                alt="react_js_image"
+                className="w-54 h-48 mt-2.5"
+              />
             </div>
-            <p className="text-slate-100 mt-4  text-lg font-bold">
-              I worked as <span className="text-orange-400">FPT Software</span>{" "}
-              for 2.5 years after graduating from HUTECH University with a major
-              in information technology before I acquired my current position.
-            </p>
             <p className="text-slate-100 mt-2.5 text-lg font-bold">
               Backend: C#, .NET, ASP.NET Core, SQL, CosmosDB, Entity Framework
               Core, DI, Hangfire, XUnit, NUnit, SignalR, etc
@@ -72,14 +87,28 @@ function About() {
                   Email:{" "}
                 </span>
                 <span className="text-slate-100 text-lg font-bold">
-                  tamle.dev@gmail.com
+                  tamle.dev@gmail.com{" "}
+                  <AiOutlineMail
+                    onClick={handleOpenDialog}
+                    className="inline cursor-pointer"
+                    id="hire-me-icon"
+                  />
+                  <Tooltip
+                    anchorSelect="#hire-me-icon"
+                    content="Hire me!"
+                    key={"bottom"}
+                    place={"bottom"}
+                  ></Tooltip>
+                  {isOpen && (
+                    <Dialog onCloseDialog={handleCloseDialog}></Dialog>
+                  )}
                 </span>
               </li>
               <li className="text-slate-100 text-lg font-bold">
                 Linkedin:{" "}
                 <span>
                   <a href="https://www.linkedin.com/in/le-tam-3732831b6/">
-                    Visit <span className="text-sky-500">Linkedin</span>
+                    Visit <span className="text-cyan-400">Linkedin</span>
                   </a>
                 </span>
               </li>
