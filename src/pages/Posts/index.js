@@ -10,6 +10,7 @@ import { LanguagesContext } from "../../App";
 import { ENGLISH } from "../../common/commonConstant";
 
 import "./index.css";
+import Comments from "../../components/core/Comments";
 
 function Posts() {
   const lang = useContext(LanguagesContext);
@@ -17,8 +18,6 @@ function Posts() {
   const [currentPost, setCurrentPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  console.log(lang);
 
   const handleNavigationToPostDetail = (id) => {
     navigate(`/post/${id}`);
@@ -80,7 +79,11 @@ function Posts() {
               <PulseLoader color="#36d6b0" />
             </div>
           ) : (
-            <ContentList post={currentPost} />
+            <>
+              <ContentList post={currentPost} />
+              <hr className="mt-3" />
+              <Comments />
+            </>
           )}
         </div>
       </div>
