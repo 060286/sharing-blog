@@ -7,7 +7,7 @@ function ContentList({ post }) {
   return (
     <div className="content-list-block">
       {post.content.map((item) => (
-        <FadeIn transitionDuration={1000}>
+        <FadeIn transitionDuration={1000} key={item.id}>
           <ContentItem
             key={item.id}
             notes={item.notes}

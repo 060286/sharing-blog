@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
+import axios from "axios";
+
 import PulseLoader from "react-spinners/PulseLoader";
 
 import FadeIn from "react-fade-in/lib/FadeIn";
@@ -15,11 +17,42 @@ function Home() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
+  const [quotes, setQuotes] = useState(undefined);
+  const [quotesError, setQuotesError] = useState(undefined);
+
   const handleNavigationToPostDetail = (id) => {
     navigate(`/post/${id}`);
   };
 
+  const API_KEY = process.env;
+  console.log(API_KEY);
+
   useEffect(() => {
+    const fetchQuotes = async () => {
+      try {
+        const options = {
+          method: "GET",
+          url: `${process.env.REACT_APP_QUOTES_API_URL}`,
+          params: {
+            category: "all",
+            count: "2",
+          },
+          headers: {
+            "X-RapidAPI-Key": `${process.env.REACT_APP_QUOTES_API_KEY}`,
+            "X-RapidAPI-Host": `${process.env.REACT_APP_QUOTES_API_HOST}`,
+          },
+        };
+
+        const response = await axios.request(options);
+
+        setQuotes(response.data[0]);
+      } catch (err) {
+        setQuotesError(err);
+      }
+    };
+
+    fetchQuotes();
+
     setTimeout(() => {
       setLoading(false);
     }, 1500);
@@ -58,9 +91,24 @@ function Home() {
           <div className="basis-8/12 bg-slate-600 p-4 text-3xl font-bold text-slate-800">
             <FadeIn transitionDuration={3500}>
               {language.language === ENGLISH ? (
-                <p>Hi guys</p>
+                <>
+                  <p className="text-center text-xl text-slate-400">
+                    "{quotes.text}"
+                  </p>
+                  <p className="text-center text-base text-slate-400">
+                    {quotes.author}
+                  </p>
+                </>
               ) : (
-                <p>Chào bạn!</p>
+                <>
+                  <p className="text-center text-xl text-slate-400">
+                    "{quotes.text}"
+                  </p>
+                  <p className="text-center text-base text-slate-400">
+                    {quotes.author}
+                  </p>
+                  <p>Vietnamese</p>
+                </>
               )}
             </FadeIn>
           </div>

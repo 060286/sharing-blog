@@ -5,7 +5,7 @@ const headerData = [
   },
   {
     to: "/about-me",
-    title: "About",
+    title: "About me",
   },
 ];
 
